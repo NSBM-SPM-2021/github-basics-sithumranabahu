@@ -1,62 +1,30 @@
-// Entry Point of the API Server 
-  
 const express = require('express');
-  
-/* Creates an Express application. 
-   The express() function is a top-level 
-   function exported by the express module.
-*/
+const cors = require('cors');
+const mongoose = require('mongoose');
+
+require('dotenv').config();
+
 const app = express();
-const Pool = require('pg').Pool;
-  
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'gfgbackend',
-    password: 'postgres',
-    dialect: 'postgres',
-    port: 5432
+const port = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+const url = process.env.ATLAS_URI;
+global.URL = url;
+
+mongoose.connect(url, { useNewUrlParser: true,   useUnifiedTopology: true});
+
+const connection = mongoose.connection;
+
+connection.once('open',()=>{
+    console.log("MongoDB connection successfully");
 });
-  
-  
-/* To handle the HTTP Methods Body Parser 
-   is used, Generally used to extract the 
-   entire body portion of an incoming 
-   request stream and exposes it on req.body 
-*/
-const bodyParser = require('body-parser');
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
-  
-  
-pool.connect((err, client, release) => {
-    if (err) {
-        return console.error(
-            'Error acquiring client', err.stack)
-    }
-    client.query('SELECT NOW()', (err, result) => {
-        release()
-        if (err) {
-            return console.error(
-                'Error executing query', err.stack)
-        }
-        console.log("Connected to Database !")
-    })
-})
-  
-app.get('/testdata', (req, res, next) => {
-    console.log("TEST DATA :");
-    pool.query('Select * from test')
-        .then(testData => {
-            console.log(testData);
-            res.send(testData.rows);
-        })
-})
-  
-// Require the Routes API  
-// Create a Server and run it on the port 3000
-const server = app.listen(3000, function () {
-    let host = server.address().address
-    let port = server.address().port
-    // Starting the Server at the port 3000
-})
+
+const doctor = require('./routes/doctor.js');
+app.use('/doctor', doctor);
+
+
+app.listen(port,() =>{
+    console.log(`Server is running on port: ${port}`);
+});
