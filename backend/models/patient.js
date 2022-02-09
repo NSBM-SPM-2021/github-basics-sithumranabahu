@@ -33,6 +33,21 @@ const patientRegSchema = new Schema({
         unique : true
     },
 
+    gender:{
+        type: String,
+        required: true,
+    },
+    
+    age:{
+        type: String,
+        required: true,
+    },
+
+    bod:{
+        type: String,
+        required: true,
+    },
+
     disease:{
         type: String,
         required: true

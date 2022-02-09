@@ -11,6 +11,7 @@ router.route('/add').post((req,res) => {
     const tel = req.body.tel;
     const home = req.body.home
     const address = req.body.address;
+    const gender = req.body.gender;
     const educationQualification = req.body.educationQualification;
     const workExperience = req.body.workExperience;
     const govermentRegistrationNumber = req.body.govermentRegistrationNumber;
@@ -19,7 +20,7 @@ router.route('/add').post((req,res) => {
     const chargeForChannelling = req.body.chargeForChannelling;
     const nic = req.body.nic;
     const timeStamp = timestamp('YYYY/MM/DD:mm:ss')
-    const newDoctor_Reg = new doctor_model({name, tel, home, address, educationQualification, workExperience,govermentRegistrationNumber, email, specializeFor, chargeForChannelling, nic, timeStamp});
+    const newDoctor_Reg = new doctor_model({name, tel, home, address, educationQualification, workExperience,govermentRegistrationNumber, email, specializeFor, chargeForChannelling, nic, timeStamp,gender});
 
     newDoctor_Reg.save()
         .then(() => res.json('Doctor Registered!'))

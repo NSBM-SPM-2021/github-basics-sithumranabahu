@@ -25,6 +25,10 @@ const doctor = require('./routes/doctor.js');
 app.use('/doctor', doctor);
 
 
+const patient = require('./routes/patient.js');
+app.use('/patient', patient);
+
+
 app.listen(port,() =>{
     console.log(`Server is running on port: ${port}`);
 });

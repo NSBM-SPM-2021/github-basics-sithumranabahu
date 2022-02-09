@@ -62,6 +62,11 @@ const doctorRegSchema = new Schema({
         type: String,
         required: true
     },
+    
+    gender: {
+        type: String,
+        required: true
+    },
 
 });
 const doctor_regSchema = mongoose.model('doctor', doctorRegSchema);
