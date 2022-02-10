@@ -16,22 +16,11 @@ const appoimentRegSchema = new Schema({
         required: true,
     },
 
-    date:{
+    datetime:{
         type: String,
         required: true,
-        unique
     },
 
-    time:{
-        type: String,
-        required: true
-    },
-
-    description:{
-        type: String,
-        required: true
-    },
-  
     status:{
         type: String,
         required: true

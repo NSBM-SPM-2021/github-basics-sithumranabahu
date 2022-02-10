@@ -15,7 +15,7 @@ router.route('/registration').post((req,res) => {
   
     const password = hashedPass;
     const status = "Active";
-    const userName = req.body.userName;
+    const userName = req.body.UserName;
     const userType = req.body.userType;
     const timeStamp = timestamp('YYYY/MM/DD:mm:ss')
     const authFunction = new login({userName, password, userType, timeStamp , status});
@@ -28,10 +28,10 @@ router.route('/registration').post((req,res) => {
 
 
 router.route('/login').post((req, res, next) => {
-        var UserName = req.body.UserName;
+        var userName = req.body.UserName;
         var password = req.body.password;
     
-        login.findOne({$or: [{UserName:UserName}]}) 
+        login.findOne({$or: [{userName:userName}]}) 
         .then(systemLogin =>{
             if(systemLogin){
                     bcrypt.compare(password, systemLogin.password, function(err, result){
@@ -41,15 +41,15 @@ router.route('/login').post((req, res, next) => {
                             })
                         }
                         if(result){
-                            login.find({UserName:UserName})
+                            login.find({userName:userName})
                             .then(userSearch => res.json({
                                       success:userSearch[0].userType,
                                     }))
                             .catch(err => res.status(400). res.json({
                                 success:false,
-                                    })) 
+                            })) 
                         }else{
-                             res.json({ message: false})    
+                            res.json({ message: false})    
                         }
                     })
             }else{
@@ -84,5 +84,6 @@ router.route('/updatePassword/:UserName').put((req, res)=>{
           
     })
 });  
+
 
 module.exports = router;
