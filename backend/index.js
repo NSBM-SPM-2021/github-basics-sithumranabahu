@@ -24,9 +24,11 @@ connection.once('open',()=>{
 const doctor = require('./routes/doctor.js');
 app.use('/doctor', doctor);
 
-
 const patient = require('./routes/patient.js');
 app.use('/patient', patient);
+
+const auth = require('./routes/auth.js');
+app.use('/auth', auth);
 
 
 app.listen(port,() =>{

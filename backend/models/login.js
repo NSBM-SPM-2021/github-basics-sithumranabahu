@@ -11,6 +11,17 @@ const userRegSchema = new Schema({
         required: true,
     },
     
+    userType: {
+        type: String,
+        required: true,
+    },
+
+    status: {
+        type: String,
+        required: true,
+    },
+
+
     timeStamp: {
         type: String,
         required: true

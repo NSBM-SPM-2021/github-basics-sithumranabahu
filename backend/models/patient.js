@@ -19,7 +19,7 @@ const patientRegSchema = new Schema({
     nic:{
         type: String,
         required: true,
-        unique
+        unique : true,
     },
 
     address:{
