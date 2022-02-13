@@ -58,6 +58,25 @@ router.route("/allDoctors").get((req,res) => {
         console.log(err);
     });
 });    
+
+
+router.route("/searchDoctors/:id").get((req,res) => {
+    var id = req.params.id;
+
+    doctor_model.find({name : { $regex: ".*" + id + ".*"}}).then((doctors) => {
+        res.json(doctors);
+    }).catch((err) => {
+        console.log(err);
+    });
+});    
+ 
+router.route("/allDoctors").get((req,res) => {
+    doctor_model.find().then((doctors) => {
+        res.json(doctors);
+    }).catch((err) => {
+        console.log(err);
+    });
+});    
  
 
 router.route("/deleteDoctor/:id").delete(async (req, res) => {
