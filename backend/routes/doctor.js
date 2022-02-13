@@ -20,7 +20,7 @@ router.route('/add').post((req,res) => {
     const specializeFor = req.body.specializeFor;
     const chargeForChannelling = req.body.chargeForChannelling;
     const nic = req.body.nic;
-    const timeStamp = timestamp('YYYY/MM/DD:mm:ss')
+    const timeStamp = timestamp('YYYY/MM/DD:mm:ss');
     const newDoctor_Reg = new doctor_model({name, tel, home, address, educationQualification, workExperience,govermentRegistrationNumber, email, specializeFor, chargeForChannelling, nic, timeStamp,gender});
 
     newDoctor_Reg.save()
@@ -28,6 +28,29 @@ router.route('/add').post((req,res) => {
         .catch(err => res.status(400).json('Error: '+err));
 });
   
+router.route('/updateDoctorProfile/:id').put((req, res)=>{
+       const tel = req.body.tel;
+       const home = req.body.home
+       const address = req.body.address;    
+       const educationQualification = req.body.educationQualification;
+       const workExperience = req.body.workExperience;
+       const specializeFor = req.body.specializeFor;
+       const chargeForChannelling = req.body.chargeForChannelling;
+       const id = req.params.id;
+       
+       const updatePass={
+            tel, home, address, educationQualification, workExperience, specializeFor, chargeForChannelling
+       }
+       const update1 =  doctor_model.findByIdAndUpdate(id,updatePass).then(() => {
+               
+        res.status(200).send({status :"Doctor Profile Updated"});
+            
+        }).catch((err) => {
+            console.log(err);
+            res.status(400).send({status: "Error with Updating Data",error: err.message});
+        });         
+});
+
 router.route("/allDoctors").get((req,res) => {
     doctor_model.find().then((doctors) => {
         res.json(doctors);
